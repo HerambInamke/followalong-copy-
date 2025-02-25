@@ -15,10 +15,11 @@ export default function MyProduct({ _id, name, image, description, price }) {
         return () => clearInterval(interval);
     }, [image]);
 
-    const currentImage = image.length > 0 ? image[currentIndex] : null;
+    const currentImage = image && image.length > 0 ? image[currentIndex] : null;
+    const imageUrl = currentImage ? `http://localhost:8000${currentImage}` : 'https://via.placeholder.com/400';
 
     const handleEdit = () => {
-        navigate(`/create-product/${_id}`);
+        navigate(`/product/${_id}`);
     };
 
     const handleDelete = async () => {
@@ -28,7 +29,6 @@ export default function MyProduct({ _id, name, image, description, price }) {
             );
             if (response.status === 200) {
                 alert("Product Deleted Successfully");
-                navigate("/");
                 window.location.reload();
             }
         } catch (error) {
@@ -42,10 +42,14 @@ export default function MyProduct({ _id, name, image, description, price }) {
             {/* Image Container */}
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-100">
                 <img
-                    src={currentImage ? `http://localhost:8000${currentImage}` : "/placeholder.jpg"}
+                    src={imageUrl}
                     alt={name}
                     className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://via.placeholder.com/400';
+                    }}
                 />
                 <div
                     className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -85,7 +89,6 @@ export default function MyProduct({ _id, name, image, description, price }) {
             </div>
         </div>
     );
-    
 }
 
 MyProduct.propTypes = {
