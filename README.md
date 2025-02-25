@@ -827,4 +827,5 @@ In this milestone, work on backend functionality for the cart. The goal is to cr
 - Ensure proper API integration between frontend and backend.
 - Maintain a clean and responsive UI.
 - Handle cases where the user has no address data gracefully.
-   
+   #   f o l l o w a l o n g - c o p y -  
+ 
